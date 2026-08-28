@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catania Social Club — Piazza Scammacca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --basalt:#161413;
+    --basalt-2:#211E1C;
+    --stone:#F3EEE2;
+    --stone-dim:#E7DFCC;
+    --ember:#E0672C;
+    --ember-dim:#B8511F;
+    --ink:#1D1A17;
+    --line: rgba(243,238,226,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--stone);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:0.7rem;
+    font-weight:700;
+  }
+
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.1rem clamp(1.2rem, 5vw, 3.5rem);
+    background:rgba(22,20,19,0.88);
+    backdrop-filter:blur(8px);
+    color:var(--stone);
+  }
+  .brand{
+    font-family:'Instrument Serif', serif;
+    font-style:italic;
+    font-size:1.35rem;
+    letter-spacing:0.01em;
+  }
+  nav{display:flex; gap:2rem; align-items:center;}
+  nav a{
+    font-family:'Space Mono', monospace;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    text-decoration:none;
+    color:var(--stone);
+    opacity:0.85;
+  }
+  .nav-cta{
+    background:var(--ember);
+    color:var(--basalt) !important;
+    padding:0.55rem 1.1rem;
+    border-radius:2px;
+    opacity:1 !important;
+    font-weight:700;
+  }
+  .menu-toggle{display:none; background:none; border:none; color:var(--stone); font-size:1.4rem; cursor:pointer;}
+
+  .hero{
+    min-height:100svh;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(224,103,44,0.22), transparent 50%),
+      linear-gradient(180deg, var(--basalt) 0%, var(--basalt-2) 100%);
+    color:var(--stone);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:7rem clamp(1.2rem, 6vw, 5rem) 3rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-eyebrow{
+    color:var(--ember);
+    margin-bottom:1.4rem;
+    display:flex; align-items:center; gap:0.7rem;
+  }
+  .hero-eyebrow::before{
+    content:"";
+    width:26px; height:1px;
+    background:var(--ember);
+    display:inline-block;
+  }
+  h1.hero-title{
+    font-family:'Instrument Serif', serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(3rem, 8.5vw, 6rem);
+    line-height:1.02;
+    max-width:16ch;
+    position:relative; z-index:2;
+  }
+  .hero-title .accent{ color:var(--ember); }
+  .hero-sub{
+    margin-top:1.6rem;
+    max-width:44ch;
+    font-size:1.05rem;
+    line-height:1.6;
+    color:rgba(243,238,226,0.78);
+    position:relative; z-index:2;
+  }
+  .hero-actions{
+    margin-top:2.6rem;
+    display:flex; gap:1rem; flex-wrap:wrap;
+    position:relative; z-index:2;
+  }
+  .btn{
+    font-family:'Space Mono', monospace;
+    font-size:0.76rem;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    padding:0.95rem 1.6rem;
+    text-decoration:none;
+    display:inline-block;
+    border-radius:2px;
+    transition:transform .18s ease;
+  }
+  .btn-primary{background:var(--ember); color:var(--basalt); font-weight:700;}
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line); color:var(--stone);}
+
+  .facts-bar{
+    margin-top:4rem;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    display:flex; flex-wrap:wrap;
+    position:relative; z-index:2;
+  }
+  .fact{ flex:1 1 200px; padding:1.2rem 1.4rem 1.2rem 0; border-right:1px solid var(--line);}
+  .fact:last-child{border-right:none;}
+  .fact-label{color:var(--ember); margin-bottom:0.4rem; display:block;}
+  .fact-value{font-family:'Instrument Serif', serif; font-style:italic; font-size:1.15rem; color:var(--stone);}
+
+  .basalt-band{
+    height:26px;
+    background:
+      repeating-linear-gradient(90deg, var(--basalt) 0 46px, var(--ink) 46px 48px),
+      repeating-linear-gradient(90deg, transparent 0 23px, rgba(0,0,0,0.25) 23px 24px);
+    position:relative;
+  }
+  .basalt-band::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(0deg, transparent 0 24px, rgba(0,0,0,0.3) 24px 26px);
+  }
+  .basalt-band.small{height:16px;}
+
+  .section{ padding:5.5rem clamp(1.2rem, 6vw, 5rem); }
+  .section-head{ max-width:60ch; margin-bottom:3rem; }
+  .section-head .eyebrow{ color:var(--ember-dim); margin-bottom:0.9rem; display:block; }
+  .section-head h2{
+    font-family:'Instrument Serif', serif;
+    font-weight:400;
+    font-size:clamp(1.9rem, 4vw, 2.8rem);
+    line-height:1.15;
+  }
+
+  .moods{ display:grid; grid-template-columns:repeat(3,1fr); gap:2.5rem; }
+  .mood{ border-top:2px solid var(--ink); padding-top:1.4rem; }
+  .mood .time{ font-family:'Space Mono', monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--ember-dim); display:block; margin-bottom:0.6rem;}
+  .mood h3{ font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; font-size:1.5rem; margin-bottom:0.8rem;}
+  .mood p{ font-size:0.95rem; line-height:1.65; color:#4a453e; }
+
+  .menu-section{ background:var(--basalt); color:var(--stone); }
+  .menu-section .section-head .eyebrow{ color:var(--ember); }
+  .menu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:3rem 4rem; }
+  .menu-list h4{
+    font-family:'Space Mono', monospace; text-transform:uppercase; font-size:0.74rem;
+    letter-spacing:0.12em; color:var(--ember); margin-bottom:1.2rem; padding-bottom:0.6rem;
+    border-bottom:1px solid var(--line);
+  }
+  .menu-item{ display:flex; align-items:baseline; gap:0.5rem; margin-bottom:1.3rem; }
+  .menu-item .name{ font-family:'Instrument Serif', serif; font-style:italic; font-size:1.2rem; white-space:nowrap; }
+  .menu-item .leader{ flex:1; border-bottom:1px dotted rgba(243,238,226,0.35); height:0.5em; }
+  .menu-item .price{ font-family:'Space Mono', monospace; font-size:0.88rem; color:var(--ember); white-space:nowrap; }
+  .menu-item .desc{ display:block; font-size:0.8rem; color:rgba(243,238,226,0.6); margin-top:0.15rem; font-family:'Space Grotesk',sans-serif; font-style:normal;}
+  .menu-note{ margin-top:2.5rem; font-size:0.85rem; color:rgba(243,238,226,0.55); font-style:italic; font-family:'Instrument Serif', serif; }
+
+  .reviews{ background:var(--stone-dim); }
+  .review-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:1rem; }
+  .review-card{ background:var(--stone); padding:1.8rem; border-left:3px solid var(--ember); }
+  .stars{ color:var(--ember-dim); font-size:0.9rem; margin-bottom:0.8rem; letter-spacing:0.1em; }
+  .review-card p{ font-family:'Instrument Serif', serif; font-style:italic; font-size:1.05rem; line-height:1.55; margin-bottom:1rem; }
+  .review-card .who{ font-family:'Space Mono', monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#6b6355; }
+
+  .visit{ background:var(--basalt-2); color:var(--stone); display:grid; grid-template-columns:1.1fr 0.9fr; gap:3rem; align-items:center; }
+  .visit-copy h2{ font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; font-size:clamp(2rem,4vw,3rem); margin-bottom:1.2rem; line-height:1.1; }
+  .visit-copy p{ color:rgba(243,238,226,0.78); line-height:1.65; max-width:44ch; margin-bottom:2rem; }
+  .hours-table{ font-family:'Space Mono', monospace; font-size:0.85rem; border-top:1px solid var(--line); }
+  .hours-row{ display:flex; justify-content:space-between; padding:0.65rem 0; border-bottom:1px solid var(--line); color:rgba(243,238,226,0.85); }
+  .visit-card{ background:var(--basalt); border:1px solid var(--line); padding:2rem; }
+  .visit-card .eyebrow{ color:var(--ember); display:block; margin-bottom:1rem; }
+  .visit-card .addr{ font-family:'Instrument Serif', serif; font-style:italic; font-size:1.3rem; margin-bottom:1.6rem; }
+
+  footer{
+    background:var(--basalt); color:rgba(243,238,226,0.55);
+    padding:2.4rem clamp(1.2rem, 6vw, 5rem);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;
+    font-family:'Space Mono', monospace; font-size:0.72rem; letter-spacing:0.03em;
+  }
+
+  @media (max-width: 860px){
+    nav{
+      position:fixed; top:64px; left:0; right:0; background:var(--basalt);
+      flex-direction:column; align-items:flex-start; padding:1.5rem 1.5rem 2rem; gap:1.2rem;
+      transform:translateY(-130%); transition:transform .25s ease;
+    }
+    nav.open{transform:translateY(0);}
+    .menu-toggle{display:block;}
+    .moods{grid-template-columns:1fr;}
+    .menu-grid{grid-template-columns:1fr;}
+    .review-row{grid-template-columns:1fr;}
+    .visit{grid-template-columns:1fr;}
+    .facts-bar{flex-direction:column;}
+    .fact{border-right:none; border-bottom:1px solid var(--line);}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none !important;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Catania Social Club</div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+  <nav id="nav">
+    <a href="#menu">Menu</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#visit">Visit</a>
+    <a href="tel:+393206774623" class="nav-cta">Reserve</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow eyebrow">Piazza Scammacca — Catania</div>
+  <h1 class="hero-title">One piazza.<br>Three <span class="accent">moods</span><br>a day.</h1>
+  <p class="hero-sub">
+    Pizzeria by lunch, ristorante by dinner, cocktail bar after dark — all on one of
+    Catania's liveliest squares, a few steps from the fish market.
+  </p>
+  <div class="hero-actions">
+    <a href="tel:+393206774623" class="btn btn-primary">Reserve a Table</a>
+    <a href="#menu" class="btn btn-ghost">See the Menu</a>
+  </div>
+  <div class="facts-bar">
+    <div class="fact">
+      <span class="fact-label eyebrow">Rated</span>
+      <span class="fact-value">4.8 / 5 — Travelers' Choice 2025</span>
+    </div>
+    <div class="fact">
+      <span class="fact-label eyebrow">Open</span>
+      <span class="fact-value">Daily until midnight</span>
+    </div>
+    <div class="fact">
+      <span class="fact-label eyebrow">Find us</span>
+      <span class="fact-value">Piazza Scammacca, 5</span>
+    </div>
+  </div>
+</section>
+
+<div class="basalt-band"></div>
+
+<section class="section">
+  <div class="section-head">
+    <span class="eyebrow">The Square</span>
+    <h2>Same table, different city each hour</h2>
+  </div>
+  <div class="moods">
+    <div class="mood">
+      <span class="time">Midday</span>
+      <h3>La Pizzeria</h3>
+      <p>A quick, sunny lunch on the piazza — wood-fired pizza and a caprese platter while Catania moves around you.</p>
+    </div>
+    <div class="mood">
+      <span class="time">Evening</span>
+      <h3>Il Ristorante</h3>
+      <p>Sicilian pasta, cured meat and cheese boards, and a slower pace as the square fills with evening light.</p>
+    </div>
+    <div class="mood">
+      <span class="time">After Dark</span>
+      <h3>Il Cocktail Bar</h3>
+      <p>Limoncello, house cocktails, and live music some evenings — the piazza's after-hours meeting point.</p>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section section" id="menu">
+  <div class="section-head">
+    <span class="eyebrow">On The Table</span>
+    <h2>A taste of the square</h2>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-list">
+      <h4>Giorno</h4>
+      <div class="menu-item">
+        <span class="name">Pizza Margherita<span class="desc">San Marzano, fior di latte, basil</span></span>
+        <span class="leader"></span>
+        <span class="price">€9</span>
+      </div>
+      <div class="menu-item">
+        <span class="name">Pasta al Pistacchio<span class="desc">Sicilian pistachio, guanciale, pecorino</span></span>
+        <span class="leader"></span>
+        <span class="price">€13</span>
+      </div>
+      <div class="menu-item">
+        <span class="name">Tagliere Misto<span class="desc">Cured meats, local cheeses, honey</span></span>
+        <span class="leader"></span>
+        <span class="price">€16</span>
+      </div>
+    </div>
+    <div class="menu-list">
+      <h4>Notte</h4>
+      <div class="menu-item">
+        <span class="name">Carbonara<span class="desc">Guanciale, pecorino, black pepper</span></span>
+        <span class="leader"></span>
+        <span class="price">€12</span>
+      </div>
+      <div class="menu-item">
+        <span class="name">Cassata Siciliana<span class="desc">Ricotta, candied fruit</span></span>
+        <span class="leader"></span>
+        <span class="price">€7</span>
+      </div>
+      <div class="menu-item">
+        <span class="name">House Limoncello<span class="desc">Made in-house, served ice cold</span></span>
+        <span class="leader"></span>
+        <span class="price">€5</span>
+      </div>
+    </div>
+  </div>
+  <p class="menu-note">Vegetarian and vegan options available daily — ask your server for today's picks.</p>
+</section>
+
+<div class="basalt-band small"></div>
+
+<section class="section reviews" id="reviews">
+  <div class="section-head">
+    <span class="eyebrow">Da Chi È Stato Qui</span>
+    <h2>What the square is saying</h2>
+  </div>
+  <div class="review-row">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"A social spot in every sense — the piazza setting is beautiful and the pistachio pasta is unforgettable."</p>
+      <div class="who">TripAdvisor</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Comfortable and welcoming, with friendly and professional staff — a real gem in the heart of Catania."</p>
+      <div class="who">Google Reviews</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p>"Excellent pizza, and the atmosphere of the piazza makes the wait for a table worth it."</p>
+      <div class="who">TheFork</div>
+    </div>
+  </div>
+</section>
+
+<section class="visit section" id="visit">
+  <div class="visit-copy">
+    <h2>Find us on the piazza</h2>
+    <p>In the heart of Catania, steps from Piazza Duomo and the fish market. Walk-ins welcome — reservations recommended for dinner.</p>
+    <div class="hours-table">
+      <div class="hours-row"><span>Mon – Sun</span><span>Lunch – Midnight</span></div>
+      <div class="hours-row"><span>Live music</span><span>Select evenings</span></div>
+    </div>
+  </div>
+  <div class="visit-card">
+    <span class="eyebrow">Catania Social Club</span>
+    <div class="addr">Piazza Scammacca, 5<br>95131 Catania, Italy</div>
+    <a href="tel:+393206774623" class="btn btn-primary" style="width:100%; text-align:center;">Call to Reserve</a>
+  </div>
+</section>
+
+<footer>
+  <span>© Catania Social Club</span>
+  <span>Homepage concept prepared by Carmelo · design draft, not yet live</span>
+</footer>
+
+<script>
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('nav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+</script>
+
+</body>
+</html>
