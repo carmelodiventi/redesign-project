@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taverna Dei Canti — Via Maqueda, Palermo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#132A3E;
+    --ink-deep:#0C1E2E;
+    --stone:#F3ECDA;
+    --stone-2:#E9E0C7;
+    --citrus:#F0B429;
+    --wine:#7A2436;
+    --vermillion:#C6432A;
+    --charcoal:#211C15;
+    --line: rgba(243,236,218,0.22);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--stone);
+    color:var(--charcoal);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:0.72rem;
+    font-weight:500;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.1rem clamp(1.2rem, 5vw, 3.5rem);
+    background:rgba(12,30,46,0.86);
+    backdrop-filter:blur(8px);
+    color:var(--stone);
+  }
+  .brand{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:1.25rem;
+    letter-spacing:0.01em;
+  }
+  nav{display:flex; gap:2rem; align-items:center;}
+  nav a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    text-decoration:none;
+    color:var(--stone);
+    opacity:0.85;
+    transition:opacity .2s;
+  }
+  nav a:hover{opacity:1;}
+  .nav-cta{
+    background:var(--citrus);
+    color:var(--ink-deep) !important;
+    padding:0.55rem 1.1rem;
+    border-radius:2px;
+    opacity:1 !important;
+    font-weight:500;
+  }
+  .menu-toggle{display:none; background:none; border:none; color:var(--stone); font-size:1.4rem; cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(240,180,41,0.18), transparent 45%),
+      linear-gradient(180deg, var(--ink-deep) 0%, var(--ink) 70%, var(--ink) 100%);
+    color:var(--stone);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:7rem clamp(1.2rem, 6vw, 5rem) 3rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-10%; bottom:-20%;
+    width:520px; height:520px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(198,67,42,0.35), transparent 70%);
+    filter:blur(10px);
+  }
+  .hero-eyebrow{
+    color:var(--citrus);
+    margin-bottom:1.4rem;
+    display:flex; align-items:center; gap:0.7rem;
+  }
+  .hero-eyebrow::before{
+    content:"";
+    width:26px; height:1px;
+    background:var(--citrus);
+    display:inline-block;
+  }
+  h1.hero-title{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(3rem, 9vw, 6.4rem);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+    max-width:15ch;
+    position:relative; z-index:2;
+  }
+  .hero-sub{
+    margin-top:1.6rem;
+    max-width:42ch;
+    font-size:1.05rem;
+    line-height:1.6;
+    color:rgba(243,236,218,0.82);
+    position:relative; z-index:2;
+  }
+  .hero-actions{
+    margin-top:2.6rem;
+    display:flex; gap:1rem; flex-wrap:wrap;
+    position:relative; z-index:2;
+  }
+  .btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    padding:0.95rem 1.6rem;
+    text-decoration:none;
+    display:inline-block;
+    border-radius:2px;
+    transition:transform .18s ease, background .18s ease;
+  }
+  .btn-primary{background:var(--citrus); color:var(--ink-deep); font-weight:600;}
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line); color:var(--stone);}
+  .btn-ghost:hover{background:rgba(243,236,218,0.08);}
+
+  /* ---- ticker facts bar ---- */
+  .facts-bar{
+    margin-top:4rem;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    display:flex;
+    flex-wrap:wrap;
+    gap:0;
+    position:relative; z-index:2;
+  }
+  .fact{
+    flex:1 1 200px;
+    padding:1.2rem 1.4rem 1.2rem 0;
+    border-right:1px solid var(--line);
+  }
+  .fact:last-child{border-right:none;}
+  .fact-label{color:var(--citrus); margin-bottom:0.4rem; display:block;}
+  .fact-value{font-family:'Fraunces', serif; font-size:1.15rem; font-style:italic; color:var(--stone);}
+
+  /* ---------- TILE DIVIDER (signature motif) ---------- */
+  .tile-band{
+    height:22px;
+    background-image: repeating-conic-gradient(
+      from 45deg,
+      var(--citrus) 0deg 90deg,
+      var(--wine) 90deg 180deg
+    );
+    background-size: 22px 22px;
+  }
+  .tile-band.small{height:14px; background-size:14px 14px;}
+
+  /* ---------- INTRO / THREE PILLARS ---------- */
+  .section{
+    padding:5.5rem clamp(1.2rem, 6vw, 5rem);
+  }
+  .section-head{
+    max-width:60ch;
+    margin-bottom:3rem;
+  }
+  .section-head .eyebrow{color:var(--vermillion); margin-bottom:0.9rem; display:block;}
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(1.9rem, 4vw, 2.8rem);
+    line-height:1.15;
+  }
+  .pillars{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:2.5rem;
+    margin-top:1rem;
+  }
+  .pillar{
+    border-top:2px solid var(--charcoal);
+    padding-top:1.4rem;
+  }
+  .pillar h3{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.4rem;
+    margin-bottom:0.8rem;
+  }
+  .pillar p{
+    font-size:0.95rem;
+    line-height:1.65;
+    color:#4a4438;
+  }
+
+  /* ---------- MENU ---------- */
+  .menu-section{
+    background:var(--ink-deep);
+    color:var(--stone);
+  }
+  .menu-section .section-head .eyebrow{color:var(--citrus);}
+  .menu-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:3rem 4rem;
+  }
+  .menu-list h4{
+    font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase;
+    font-size:0.75rem;
+    letter-spacing:0.12em;
+    color:var(--citrus);
+    margin-bottom:1.2rem;
+    padding-bottom:0.6rem;
+    border-bottom:1px solid var(--line);
+  }
+  .menu-item{
+    display:flex;
+    align-items:baseline;
+    gap:0.5rem;
+    margin-bottom:1.3rem;
+  }
+  .menu-item .name{
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+    white-space:nowrap;
+  }
+  .menu-item .leader{
+    flex:1;
+    border-bottom:1px dotted rgba(243,236,218,0.35);
+    height:0.5em;
+  }
+  .menu-item .price{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.9rem;
+    color:var(--citrus);
+    white-space:nowrap;
+  }
+  .menu-item .desc{
+    display:block;
+    font-size:0.82rem;
+    color:rgba(243,236,218,0.6);
+    margin-top:0.15rem;
+  }
+  .menu-note{
+    margin-top:2.5rem;
+    font-size:0.85rem;
+    color:rgba(243,236,218,0.55);
+    font-style:italic;
+    font-family:'Fraunces', serif;
+  }
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{
+    background:var(--stone-2);
+  }
+  .review-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2rem;
+    margin-top:1rem;
+  }
+  .review-card{
+    background:var(--stone);
+    padding:1.8rem;
+    border-left:3px solid var(--vermillion);
+  }
+  .stars{color:var(--vermillion); font-size:0.9rem; margin-bottom:0.8rem; letter-spacing:0.1em;}
+  .review-card p{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.02rem;
+    line-height:1.55;
+    margin-bottom:1rem;
+  }
+  .review-card .who{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#6b6355;
+  }
+
+  /* ---------- LOCATION / CTA ---------- */
+  .visit{
+    background:var(--ink);
+    color:var(--stone);
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:3rem;
+    align-items:center;
+  }
+  .visit-copy h2{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(2rem,4vw,3rem);
+    margin-bottom:1.2rem;
+    line-height:1.1;
+  }
+  .visit-copy p{
+    color:rgba(243,236,218,0.78);
+    line-height:1.65;
+    max-width:44ch;
+    margin-bottom:2rem;
+  }
+  .hours-table{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.85rem;
+    border-top:1px solid var(--line);
+  }
+  .hours-row{
+    display:flex; justify-content:space-between;
+    padding:0.65rem 0;
+    border-bottom:1px solid var(--line);
+    color:rgba(243,236,218,0.85);
+  }
+  .visit-card{
+    background:var(--ink-deep);
+    border:1px solid var(--line);
+    padding:2rem;
+  }
+  .visit-card .eyebrow{color:var(--citrus); display:block; margin-bottom:1rem;}
+  .visit-card .addr{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.3rem;
+    margin-bottom:1.6rem;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink-deep);
+    color:rgba(243,236,218,0.55);
+    padding:2.4rem clamp(1.2rem, 6vw, 5rem);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:1rem;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    letter-spacing:0.03em;
+  }
+
+  @media (max-width: 860px){
+    nav{
+      position:fixed; top:64px; left:0; right:0;
+      background:var(--ink-deep);
+      flex-direction:column;
+      align-items:flex-start;
+      padding:1.5rem 1.5rem 2rem;
+      gap:1.2rem;
+      transform:translateY(-130%);
+      transition:transform .25s ease;
+    }
+    nav.open{transform:translateY(0);}
+    .menu-toggle{display:block;}
+    .pillars{grid-template-columns:1fr;}
+    .menu-grid{grid-template-columns:1fr;}
+    .review-row{grid-template-columns:1fr;}
+    .visit{grid-template-columns:1fr;}
+    .facts-bar{flex-direction:column;}
+    .fact{border-right:none; border-bottom:1px solid var(--line);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Taverna Dei Canti</div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+  <nav id="nav">
+    <a href="#menu">Menu</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#visit">Visit</a>
+    <a href="tel:+393515006009" class="nav-cta">Reserve a Table</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow eyebrow">Via Maqueda, Palermo — Centro Storico</div>
+  <h1 class="hero-title">Dinner on<br>Palermo's<br>liveliest street</h1>
+  <p class="hero-sub">
+    Wood-fired pizza, Sicilian pasta and the sound of the old city after dark —
+    steps from Quattro Canti, at the heart of the passeggiata.
+  </p>
+  <div class="hero-actions">
+    <a href="tel:+393515006009" class="btn btn-primary">Reserve a Table</a>
+    <a href="#menu" class="btn btn-ghost">See the Menu</a>
+  </div>
+
+  <div class="facts-bar">
+    <div class="fact">
+      <span class="fact-label eyebrow">Rated</span>
+      <span class="fact-value">4.5 / 5 — 14,000+ diners</span>
+    </div>
+    <div class="fact">
+      <span class="fact-label eyebrow">Open</span>
+      <span class="fact-value">Daily, 11:00 – 00:30</span>
+    </div>
+    <div class="fact">
+      <span class="fact-label eyebrow">Find us</span>
+      <span class="fact-value">Via Maqueda, 229</span>
+    </div>
+  </div>
+</section>
+
+<div class="tile-band"></div>
+
+<section class="section">
+  <div class="section-head">
+    <span class="eyebrow">The Room</span>
+    <h2>A table in the middle of everything</h2>
+  </div>
+  <div class="pillars">
+    <div class="pillar">
+      <h3>La Strada</h3>
+      <p>Outdoor tables spill onto one of Palermo's busiest pedestrian streets — front-row seats to the energy of the old city at night.</p>
+    </div>
+    <div class="pillar">
+      <h3>La Cucina</h3>
+      <p>Wood-fired pizza alongside Sicilian classics — pasta con le sarde, seafood pasta, and a cassata worth saving room for.</p>
+    </div>
+    <div class="pillar">
+      <h3>Il Servizio</h3>
+      <p>Fast, warm and fluent in English — recommendations from a team that knows the menu and the neighborhood equally well.</p>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section section" id="menu">
+  <div class="section-head">
+    <span class="eyebrow">Tonight's Table</span>
+    <h2>A taste of what's cooking</h2>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-list">
+      <h4>Da Condividere</h4>
+      <div class="menu-item">
+        <span class="name">Margherita<span class="desc">San Marzano, fior di latte, basil</span></span>
+        <span class="leader"></span>
+        <span class="price">€9</span>
+      </div>
+      <div class="menu-item">
+        <span class="name">Pasta con le Sarde<span class="desc">Sardines, wild fennel, pine nuts, raisins</span></span>
+        <span class="leader"></span>
+        <span class="price">€14</span>
+      </div>
+      <div class="menu-item">
+        <span class="name">Gamberi Rossi<span class="desc">Red prawn pasta, cherry tomato</span></span>
+        <span class="leader"></span>
+        <span class="price">€18</span>
+      </div>
+    </div>
+    <div class="menu-list">
+      <h4>Per Finire</h4>
+      <div class="menu-item">
+        <span class="name">Cassata Siciliana<span class="desc">Ricotta, candied fruit, frozen berries</span></span>
+        <span class="leader"></span>
+        <span class="price">€7</span>
+      </div>
+      <div class="menu-item">
+        <span class="name">Cannolo alla Siciliana<span class="desc">Fresh ricotta, pistachio, candied orange</span></span>
+        <span class="leader"></span>
+        <span class="price">€6</span>
+      </div>
+      <div class="menu-item">
+        <span class="name">Limoncello della Casa<span class="desc">House-made, served ice cold</span></span>
+        <span class="leader"></span>
+        <span class="price">€5</span>
+      </div>
+    </div>
+  </div>
+  <p class="menu-note">Full menu and daily specials available at the table — ask your server for tonight's catch.</p>
+</section>
+
+<div class="tile-band small"></div>
+
+<section class="section reviews" id="reviews">
+  <div class="section-head">
+    <span class="eyebrow">Da Chi È Stato Qui</span>
+    <h2>What diners are saying</h2>
+  </div>
+  <div class="review-row">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"A wonderful first dinner in Palermo — right in the historic center, on a lively street that feels full of energy, especially after dark."</p>
+      <div class="who">Google Reviews</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Friendly, knowledgeable service and great recommendations for English-speaking travelers — the pasta was full of flavor."</p>
+      <div class="who">Google Reviews</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p>"A solid spot right in downtown Palermo — good portions and consistently tasty food."</p>
+      <div class="who">Google Reviews</div>
+    </div>
+  </div>
+</section>
+
+<section class="visit section" id="visit">
+  <div class="visit-copy">
+    <h2>Find us on Via Maqueda</h2>
+    <p>Steps from Quattro Canti, in the heart of Palermo's centro storico. Walk-ins welcome — reservations recommended after 8pm.</p>
+    <div class="hours-table">
+      <div class="hours-row"><span>Mon – Sun</span><span>11:00 – 00:30</span></div>
+      <div class="hours-row"><span>Wed (lunch)</span><span>from 09:00</span></div>
+    </div>
+  </div>
+  <div class="visit-card">
+    <span class="eyebrow">Taverna Dei Canti</span>
+    <div class="addr">Via Maqueda, 229<br>90133 Palermo, Italy</div>
+    <a href="tel:+393515006009" class="btn btn-primary" style="width:100%; text-align:center;">Call to Reserve</a>
+  </div>
+</section>
+
+<footer>
+  <span>© Taverna Dei Canti — Palermo</span>
+  <span>Homepage concept prepared by Carmelo · design draft, not yet live</span>
+</footer>
+
+<script>
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('nav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+</script>
+
+</body>
+</html>
