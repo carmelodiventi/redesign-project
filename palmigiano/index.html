@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Falegnameria Mario Palmigiano — Catania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --walnut:#2B1D14;
+    --walnut-2:#3A281B;
+    --sawdust:#F1E8DA;
+    --sawdust-2:#E5D6BF;
+    --brass:#B8823D;
+    --brass-dim:#8F6329;
+    --charcoal:#231C15;
+    --line: rgba(241,232,218,0.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--sawdust); color:var(--charcoal); font-family:'Archivo', sans-serif; -webkit-font-smoothing:antialiased; }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .eyebrow{ font-family:'JetBrains Mono', monospace; text-transform:uppercase; letter-spacing:0.14em; font-size:0.7rem; font-weight:600; }
+
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.1rem clamp(1.2rem, 5vw, 3.5rem);
+    background:rgba(43,29,20,0.9); backdrop-filter:blur(8px); color:var(--sawdust);
+  }
+  .brand{ font-family:'Fraunces', serif; font-weight:600; font-size:1.2rem; }
+  nav{display:flex; gap:2rem; align-items:center;}
+  nav a{ font-family:'JetBrains Mono', monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; text-decoration:none; color:var(--sawdust); opacity:0.85; }
+  .nav-cta{ background:var(--brass); color:var(--walnut) !important; padding:0.55rem 1.1rem; border-radius:2px; opacity:1 !important; font-weight:600; }
+  .menu-toggle{display:none; background:none; border:none; color:var(--sawdust); font-size:1.4rem; cursor:pointer;}
+
+  .hero{
+    min-height:100svh;
+    background: radial-gradient(ellipse at 15% 100%, rgba(184,130,61,0.18), transparent 55%), linear-gradient(180deg, var(--walnut) 0%, var(--walnut-2) 100%);
+    color:var(--sawdust);
+    display:flex; flex-direction:column; justify-content:center;
+    padding:7rem clamp(1.2rem, 6vw, 5rem) 3rem;
+    position:relative; overflow:hidden;
+  }
+  .hero-eyebrow{ color:var(--brass); margin-bottom:1.4rem; display:flex; align-items:center; gap:0.7rem; }
+  .hero-eyebrow::before{ content:""; width:26px; height:1px; background:var(--brass); display:inline-block; }
+  h1.hero-title{
+    font-family:'Fraunces', serif; font-weight:600; font-size:clamp(2.6rem, 7.5vw, 5.2rem);
+    line-height:1.05; max-width:15ch; position:relative; z-index:2;
+  }
+  .hero-sub{ margin-top:1.6rem; max-width:44ch; font-size:1.05rem; line-height:1.6; color:rgba(241,232,218,0.78); position:relative; z-index:2; }
+  .hero-actions{ margin-top:2.6rem; display:flex; gap:1rem; flex-wrap:wrap; position:relative; z-index:2; }
+  .btn{ font-family:'JetBrains Mono', monospace; font-size:0.76rem; text-transform:uppercase; letter-spacing:0.1em; padding:0.95rem 1.6rem; text-decoration:none; display:inline-block; border-radius:2px; transition:transform .18s ease; }
+  .btn-primary{ background:var(--brass); color:var(--walnut); font-weight:600; }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--sawdust); }
+
+  .facts-bar{ margin-top:4rem; border-top:1px solid var(--line); border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; position:relative; z-index:2; }
+  .fact{ flex:1 1 200px; padding:1.2rem 1.4rem 1.2rem 0; border-right:1px solid var(--line); }
+  .fact:last-child{ border-right:none; }
+  .fact-label{ color:var(--brass); margin-bottom:0.4rem; display:block; }
+  .fact-value{ font-family:'Fraunces', serif; font-weight:500; font-size:1.1rem; color:var(--sawdust); }
+
+  /* joinery divider — signature motif: dovetail/finger-joint pattern */
+  .joinery-band{
+    height:28px;
+    background:
+      repeating-linear-gradient(90deg, var(--walnut) 0 28px, var(--sawdust-2) 28px 56px);
+    position:relative;
+  }
+  .joinery-band::before{
+    content:"";
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(90deg, transparent 0 28px, rgba(0,0,0,0.15) 28px 30px);
+  }
+  .joinery-band.small{height:18px;}
+
+  .section{ padding:5.5rem clamp(1.2rem, 6vw, 5rem); }
+  .section-head{ max-width:60ch; margin-bottom:3rem; }
+  .section-head .eyebrow{ color:var(--brass-dim); margin-bottom:0.9rem; display:block; }
+  .section-head h2{ font-family:'Fraunces', serif; font-weight:600; font-size:clamp(1.8rem, 3.6vw, 2.6rem); line-height:1.15; }
+
+  .crafts{ display:grid; grid-template-columns:repeat(3, 1fr); gap:2.5rem; }
+  .craft{ border-top:2px solid var(--charcoal); padding-top:1.4rem; }
+  .craft h3{ font-family:'Fraunces', serif; font-weight:600; font-size:1.35rem; margin-bottom:0.8rem; }
+  .craft p{ font-size:0.95rem; line-height:1.65; color:#4a3f30; }
+
+  .work-section{ background:var(--walnut); color:var(--sawdust); }
+  .work-section .section-head .eyebrow{ color:var(--brass); }
+  .work-grid{ display:grid; grid-template-columns:1fr 1fr; gap:3rem 4rem; }
+  .work-list h4{ font-family:'JetBrains Mono', monospace; text-transform:uppercase; font-size:0.72rem; letter-spacing:0.12em; color:var(--brass); margin-bottom:1.2rem; padding-bottom:0.6rem; border-bottom:1px solid var(--line); }
+  .work-item{ margin-bottom:1.2rem; }
+  .work-item .name{ font-family:'Fraunces', serif; font-weight:600; font-size:1.1rem; display:block; }
+  .work-item .desc{ display:block; font-size:0.85rem; color:rgba(241,232,218,0.62); margin-top:0.25rem; line-height:1.5; }
+
+  .reviews{ background:var(--sawdust-2); }
+  .review-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:1rem; }
+  .review-card{ background:var(--sawdust); padding:1.8rem; border-left:3px solid var(--brass); }
+  .stars{ color:var(--brass-dim); font-size:0.9rem; margin-bottom:0.8rem; letter-spacing:0.1em; }
+  .review-card p{ font-family:'Fraunces', serif; font-style:italic; font-size:1.02rem; font-weight:500; line-height:1.55; margin-bottom:1rem; }
+  .review-card .who{ font-family:'JetBrains Mono', monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#6b5b45; }
+
+  .visit{ background:var(--walnut-2); color:var(--sawdust); display:grid; grid-template-columns:1.1fr 0.9fr; gap:3rem; align-items:center; }
+  .visit-copy h2{ font-family:'Fraunces', serif; font-weight:600; font-size:clamp(1.9rem,3.8vw,2.7rem); margin-bottom:1.2rem; line-height:1.15; }
+  .visit-copy p{ color:rgba(241,232,218,0.78); line-height:1.65; max-width:44ch; margin-bottom:2rem; }
+  .hours-table{ font-family:'JetBrains Mono', monospace; font-size:0.85rem; border-top:1px solid var(--line); }
+  .hours-row{ display:flex; justify-content:space-between; padding:0.65rem 0; border-bottom:1px solid var(--line); color:rgba(241,232,218,0.85); }
+  .visit-card{ background:var(--walnut); border:1px solid var(--line); padding:2rem; }
+  .visit-card .eyebrow{ color:var(--brass); display:block; margin-bottom:1rem; }
+  .visit-card .addr{ font-family:'Fraunces', serif; font-weight:500; font-size:1.2rem; margin-bottom:1.6rem; }
+
+  footer{ background:var(--walnut); color:rgba(241,232,218,0.55); padding:2.4rem clamp(1.2rem, 6vw, 5rem); display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-family:'JetBrains Mono', monospace; font-size:0.72rem; letter-spacing:0.03em; }
+
+  @media (max-width: 860px){
+    nav{ position:fixed; top:64px; left:0; right:0; background:var(--walnut); flex-direction:column; align-items:flex-start; padding:1.5rem 1.5rem 2rem; gap:1.2rem; transform:translateY(-130%); transition:transform .25s ease; }
+    nav.open{transform:translateY(0);}
+    .menu-toggle{display:block;}
+    .crafts{grid-template-columns:1fr;}
+    .work-grid{grid-template-columns:1fr;}
+    .review-row{grid-template-columns:1fr;}
+    .visit{grid-template-columns:1fr;}
+    .facts-bar{flex-direction:column;}
+    .fact{border-right:none; border-bottom:1px solid var(--line);}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none !important;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Mario Palmigiano</div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+  <nav id="nav">
+    <a href="#lavori">Lavori</a>
+    <a href="#reviews">Recensioni</a>
+    <a href="#visit">Contatti</a>
+    <a href="tel:+393387043497" class="nav-cta">Chiedi un Preventivo</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow eyebrow">Via della Paglia, 9 — Catania</div>
+  <h1 class="hero-title">Il legno prende la forma che serve.</h1>
+  <p class="hero-sub">
+    Falegnameria artigianale su misura: mobili, arredi per casa, negozi, bar e ristoranti.
+    Progettazione, creazione e installazione in un'unica mano.
+  </p>
+  <div class="hero-actions">
+    <a href="tel:+393387043497" class="btn btn-primary">Chiedi un Preventivo</a>
+    <a href="#lavori" class="btn btn-ghost">Vedi i Lavori</a>
+  </div>
+  <div class="facts-bar">
+    <div class="fact">
+      <span class="fact-label eyebrow">Valutazione</span>
+      <span class="fact-value">5 / 5 — clienti soddisfatti</span>
+    </div>
+    <div class="fact">
+      <span class="fact-label eyebrow">Su misura</span>
+      <span class="fact-value">Progetto, taglio, montaggio</span>
+    </div>
+    <div class="fact">
+      <span class="fact-label eyebrow">Dove</span>
+      <span class="fact-value">Via della Paglia, 9, Catania</span>
+    </div>
+  </div>
+</section>
+
+<div class="joinery-band"></div>
+
+<section class="section">
+  <div class="section-head">
+    <span class="eyebrow">La Bottega</span>
+    <h2>Ogni pezzo, pensato per lo spazio che lo ospiterà</h2>
+  </div>
+  <div class="crafts">
+    <div class="craft">
+      <h3>Casa</h3>
+      <p>Armadi su misura, ingressi, librerie e pannelli acustici pensati per gli spazi reali, non per il catalogo.</p>
+    </div>
+    <div class="craft">
+      <h3>Negozi & Locali</h3>
+      <p>Bancone, scaffalature e arredi per bar, pub e ristoranti — idee su misura per ogni tipo di attività.</p>
+    </div>
+    <div class="craft">
+      <h3>Restauro</h3>
+      <p>Recupero e restauro di mobili antichi e portoni, con la cura per i dettagli originali.</p>
+    </div>
+  </div>
+</section>
+
+<section class="work-section section" id="lavori">
+  <div class="section-head">
+    <span class="eyebrow">Lavori Recenti</span>
+    <h2>Alcune delle ultime realizzazioni</h2>
+  </div>
+  <div class="work-grid">
+    <div class="work-list">
+      <h4>Su Misura</h4>
+      <div class="work-item">
+        <span class="name">Cabina espositiva</span>
+        <span class="desc">Chiosco con dimensioni ridotte e specifiche rigide, consegnato nei tempi e nel budget.</span>
+      </div>
+      <div class="work-item">
+        <span class="name">Cabine da spiaggia (x10)</span>
+        <span class="desc">Materiali di prima qualità, lavorazione precisa, montaggio rapido in loco.</span>
+      </div>
+    </div>
+    <div class="work-list">
+      <h4>Restauro</h4>
+      <div class="work-item">
+        <span class="name">Pannelli acustici su misura</span>
+        <span class="desc">Realizzati secondo misure precise fornite dal cliente, esteticamente curati.</span>
+      </div>
+      <div class="work-item">
+        <span class="name">Timone per barca a vela</span>
+        <span class="desc">Rifacimento rapido e a prezzo corretto per un cliente diportista.</span>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:2.5rem; font-size:0.85rem; color:rgba(241,232,218,0.55); font-style:italic; font-family:'Fraunces', serif;">Foto dei lavori disponibili su richiesta — ogni progetto è realizzato su specifiche del cliente.</p>
+</section>
+
+<div class="joinery-band small"></div>
+
+<section class="section reviews" id="reviews">
+  <div class="section-head">
+    <span class="eyebrow">Chi Ha Lavorato Con Noi</span>
+    <h2>Cosa dicono i clienti</h2>
+  </div>
+  <div class="review-row">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Professionalità e qualità del lavoro senza pari — un armadio su misura oltre le aspettative."</p>
+      <div class="who">Cliente privato</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Precisione estrema nel rispetto delle misure fornite, con un risultato esteticamente curato."</p>
+      <div class="who">Cliente aziendale</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Puntuale, competente e affidabile — consigliato per qualsiasi lavoro di falegnameria."</p>
+      <div class="who">Cliente privato</div>
+    </div>
+  </div>
+</section>
+
+<section class="visit section" id="visit">
+  <div class="visit-copy">
+    <h2>Vieni in bottega</h2>
+    <p>Su appuntamento, per parlare del tuo progetto e vedere da vicino la qualità della lavorazione.</p>
+    <div class="hours-table">
+      <div class="hours-row"><span>Lun – Ven</span><span>8:00 – 13:30, 14:30 – 19:00</span></div>
+      <div class="hours-row"><span>Sab – Dom</span><span>Chiuso</span></div>
+    </div>
+  </div>
+  <div class="visit-card">
+    <span class="eyebrow">Falegnameria Mario Palmigiano</span>
+    <div class="addr">Via della Paglia, 9<br>95125 Catania</div>
+    <a href="tel:+393387043497" class="btn btn-primary" style="width:100%; text-align:center;">Chiama per un Preventivo</a>
+  </div>
+</section>
+
+<footer>
+  <span>© Falegnameria Mario Palmigiano</span>
+  <span>Homepage concept prepared by Carmelo · design draft, not yet live</span>
+</footer>
+
+<script>
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('nav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Cantarella — Commercialisti, Catania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#111B2E;
+    --navy-2:#1A2740;
+    --paper:#F5F3EE;
+    --paper-2:#E9E5DA;
+    --gold:#C6A15B;
+    --gold-dim:#9A7C41;
+    --ink:#1B1B18;
+    --line: rgba(245,243,238,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--paper); color:var(--ink); font-family:'Manrope', sans-serif; -webkit-font-smoothing:antialiased; }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .eyebrow{ font-family:'JetBrains Mono', monospace; text-transform:uppercase; letter-spacing:0.14em; font-size:0.68rem; font-weight:600; }
+
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.1rem clamp(1.2rem, 5vw, 3.5rem);
+    background:rgba(17,27,46,0.92); backdrop-filter:blur(8px); color:var(--paper);
+  }
+  .brand{ font-family:'Newsreader', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.01em; }
+  nav{display:flex; gap:2rem; align-items:center;}
+  nav a{ font-family:'JetBrains Mono', monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.1em; text-decoration:none; color:var(--paper); opacity:0.85; }
+  .nav-cta{ background:var(--gold); color:var(--navy) !important; padding:0.55rem 1.1rem; border-radius:2px; opacity:1 !important; font-weight:700; }
+  .menu-toggle{display:none; background:none; border:none; color:var(--paper); font-size:1.4rem; cursor:pointer;}
+
+  .hero{
+    min-height:100svh;
+    background: radial-gradient(ellipse at 90% 10%, rgba(198,161,91,0.15), transparent 50%), linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    color:var(--paper);
+    display:flex; flex-direction:column; justify-content:center;
+    padding:7rem clamp(1.2rem, 6vw, 5rem) 3rem;
+    position:relative; overflow:hidden;
+  }
+  .hero-eyebrow{ color:var(--gold); margin-bottom:1.4rem; display:flex; align-items:center; gap:0.7rem; }
+  .hero-eyebrow::before{ content:""; width:26px; height:1px; background:var(--gold); display:inline-block; }
+  h1.hero-title{
+    font-family:'Newsreader', serif; font-weight:500; font-size:clamp(2.4rem, 6.5vw, 4.6rem);
+    line-height:1.1; max-width:17ch; position:relative; z-index:2;
+  }
+  .hero-sub{ margin-top:1.6rem; max-width:46ch; font-size:1.05rem; line-height:1.65; color:rgba(245,243,238,0.75); position:relative; z-index:2; }
+  .hero-actions{ margin-top:2.6rem; display:flex; gap:1rem; flex-wrap:wrap; position:relative; z-index:2; }
+  .btn{ font-family:'JetBrains Mono', monospace; font-size:0.74rem; text-transform:uppercase; letter-spacing:0.1em; padding:0.95rem 1.6rem; text-decoration:none; display:inline-block; border-radius:2px; transition:transform .18s ease; }
+  .btn-primary{ background:var(--gold); color:var(--navy); font-weight:700; }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--paper); }
+
+  .facts-bar{ margin-top:4rem; border-top:1px solid var(--line); border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; position:relative; z-index:2; }
+  .fact{ flex:1 1 200px; padding:1.2rem 1.4rem 1.2rem 0; border-right:1px solid var(--line); }
+  .fact:last-child{ border-right:none; }
+  .fact-label{ color:var(--gold); margin-bottom:0.4rem; display:block; }
+  .fact-value{ font-family:'Newsreader', serif; font-weight:500; font-size:1.1rem; color:var(--paper); }
+
+  /* ledger-line divider — signature motif: fine ruled grid, echoing accounting ledgers */
+  .ledger-band{
+    height:22px;
+    background:
+      linear-gradient(var(--navy) 0 100%),
+      repeating-linear-gradient(90deg, transparent 0 39px, rgba(198,161,91,0.4) 39px 40px);
+    position:relative;
+  }
+  .ledger-band::after{
+    content:"";
+    position:absolute; left:0; right:0; top:50%; height:1px;
+    background:rgba(198,161,91,0.5);
+  }
+  .ledger-band.small{ height:14px; }
+
+  .section{ padding:5.5rem clamp(1.2rem, 6vw, 5rem); }
+  .section-head{ max-width:60ch; margin-bottom:3rem; }
+  .section-head .eyebrow{ color:var(--gold-dim); margin-bottom:0.9rem; display:block; }
+  .section-head h2{ font-family:'Newsreader', serif; font-weight:500; font-size:clamp(1.8rem, 3.6vw, 2.5rem); line-height:1.2; }
+
+  .services{ display:grid; grid-template-columns:repeat(3, 1fr); gap:2.5rem; }
+  .service{ border-top:2px solid var(--ink); padding-top:1.4rem; }
+  .service h3{ font-family:'Newsreader', serif; font-weight:600; font-size:1.3rem; margin-bottom:0.8rem; }
+  .service p{ font-size:0.95rem; line-height:1.65; color:#4a463c; }
+
+  .about-section{ background:var(--navy); color:var(--paper); }
+  .about-section .section-head .eyebrow{ color:var(--gold); }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:3rem 4rem; }
+  .about-list h4{ font-family:'JetBrains Mono', monospace; text-transform:uppercase; font-size:0.7rem; letter-spacing:0.12em; color:var(--gold); margin-bottom:1.2rem; padding-bottom:0.6rem; border-bottom:1px solid var(--line); }
+  .about-item{ margin-bottom:1.2rem; }
+  .about-item .name{ font-family:'Newsreader', serif; font-weight:600; font-size:1.1rem; display:block; }
+  .about-item .desc{ display:block; font-size:0.85rem; color:rgba(245,243,238,0.62); margin-top:0.25rem; line-height:1.5; }
+
+  .reviews{ background:var(--paper-2); }
+  .review-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:1rem; }
+  .review-card{ background:var(--paper); padding:1.8rem; border-left:3px solid var(--gold); }
+  .stars{ color:var(--gold-dim); font-size:0.9rem; margin-bottom:0.8rem; letter-spacing:0.1em; }
+  .review-card p{ font-family:'Newsreader', serif; font-style:italic; font-size:1.02rem; line-height:1.55; margin-bottom:1rem; }
+  .review-card .who{ font-family:'JetBrains Mono', monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.1em; color:#6b6555; }
+
+  .visit{ background:var(--navy-2); color:var(--paper); display:grid; grid-template-columns:1.1fr 0.9fr; gap:3rem; align-items:center; }
+  .visit-copy h2{ font-family:'Newsreader', serif; font-weight:500; font-size:clamp(1.9rem,3.8vw,2.6rem); margin-bottom:1.2rem; line-height:1.2; }
+  .visit-copy p{ color:rgba(245,243,238,0.75); line-height:1.65; max-width:44ch; margin-bottom:2rem; }
+  .hours-table{ font-family:'JetBrains Mono', monospace; font-size:0.85rem; border-top:1px solid var(--line); }
+  .hours-row{ display:flex; justify-content:space-between; padding:0.65rem 0; border-bottom:1px solid var(--line); color:rgba(245,243,238,0.85); }
+  .visit-card{ background:var(--navy); border:1px solid var(--line); padding:2rem; }
+  .visit-card .eyebrow{ color:var(--gold); display:block; margin-bottom:1rem; }
+  .visit-card .addr{ font-family:'Newsreader', serif; font-weight:500; font-size:1.15rem; margin-bottom:1.6rem; }
+
+  footer{ background:var(--navy); color:rgba(245,243,238,0.55); padding:2.4rem clamp(1.2rem, 6vw, 5rem); display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-family:'JetBrains Mono', monospace; font-size:0.7rem; letter-spacing:0.03em; }
+
+  @media (max-width: 860px){
+    nav{ position:fixed; top:64px; left:0; right:0; background:var(--navy); flex-direction:column; align-items:flex-start; padding:1.5rem 1.5rem 2rem; gap:1.2rem; transform:translateY(-130%); transition:transform .25s ease; }
+    nav.open{transform:translateY(0);}
+    .menu-toggle{display:block;}
+    .services{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .review-row{grid-template-columns:1fr;}
+    .visit{grid-template-columns:1fr;}
+    .facts-bar{flex-direction:column;}
+    .fact{border-right:none; border-bottom:1px solid var(--line);}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none !important;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Studio Cantarella</div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+  <nav id="nav">
+    <a href="#servizi">Servizi</a>
+    <a href="#reviews">Recensioni</a>
+    <a href="#visit">Contatti</a>
+    <a href="tel:+39095444575" class="nav-cta">Prenota una Consulenza</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow eyebrow">Via Giovanni Lavaggi, 48 — Catania</div>
+  <h1 class="hero-title">Quarant'anni di consulenza, un solo obiettivo: la vostra tranquillità.</h1>
+  <p class="hero-sub">
+    Studio di consulenza fiscale, contabile e societaria a Catania — professionalità
+    e disponibilità al servizio di privati e aziende dal 1985.
+  </p>
+  <div class="hero-actions">
+    <a href="tel:+39095444575" class="btn btn-primary">Prenota una Consulenza</a>
+    <a href="#servizi" class="btn btn-ghost">I Nostri Servizi</a>
+  </div>
+  <div class="facts-bar">
+    <div class="fact">
+      <span class="fact-label eyebrow">Esperienza</span>
+      <span class="fact-value">Oltre 40 anni di attività</span>
+    </div>
+    <div class="fact">
+      <span class="fact-label eyebrow">Valutazione</span>
+      <span class="fact-value">5 / 5 — clienti soddisfatti</span>
+    </div>
+    <div class="fact">
+      <span class="fact-label eyebrow">Sede</span>
+      <span class="fact-value">Via Giovanni Lavaggi, 48</span>
+    </div>
+  </div>
+</section>
+
+<div class="ledger-band"></div>
+
+<section class="section" id="servizi">
+  <div class="section-head">
+    <span class="eyebrow">I Nostri Servizi</span>
+    <h2>Consulenza pensata per ogni fase dell'attività</h2>
+  </div>
+  <div class="services">
+    <div class="service">
+      <h3>Consulenza Fiscale</h3>
+      <p>Dichiarazioni, pianificazione fiscale e assistenza continuativa per privati e imprese.</p>
+    </div>
+    <div class="service">
+      <h3>Contabilità & Bilanci</h3>
+      <p>Tenuta della contabilità ordinaria e semplificata, redazione e analisi dei bilanci.</p>
+    </div>
+    <div class="service">
+      <h3>Consulenza Societaria</h3>
+      <p>Costituzione, gestione e assistenza tecnica per società di ogni dimensione.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about-section section">
+  <div class="section-head">
+    <span class="eyebrow">Lo Studio</span>
+    <h2>Un rapporto di fiducia costruito nel tempo</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-list">
+      <h4>Il Nostro Approccio</h4>
+      <div class="about-item">
+        <span class="name">Ascolto e chiarezza</span>
+        <span class="desc">Ogni cliente segue un percorso su misura, con spiegazioni chiare e dirette.</span>
+      </div>
+      <div class="about-item">
+        <span class="name">Problem solving smart</span>
+        <span class="desc">Soluzioni pratiche a problematiche tecniche, senza inutili complicazioni.</span>
+      </div>
+    </div>
+    <div class="about-list">
+      <h4>Perché Sceglierci</h4>
+      <div class="about-item">
+        <span class="name">Continuità nel rapporto</span>
+        <span class="desc">Molti clienti ci affidano la propria contabilità da anni, con fiducia rinnovata.</span>
+      </div>
+      <div class="about-item">
+        <span class="name">Serietà e professionalità</span>
+        <span class="desc">Un punto fermo per chi cerca un consulente affidabile nel tempo.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ledger-band small"></div>
+
+<section class="section reviews" id="reviews">
+  <div class="section-head">
+    <span class="eyebrow">Chi Si È Affidato A Noi</span>
+    <h2>Cosa dicono i nostri clienti</h2>
+  </div>
+  <div class="review-row">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Professionali, disponibili e capaci di risolvere i problemi con intelligenza."</p>
+      <div class="who">Cliente da 2 anni</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Preparazione e cortesia da anni — un punto di riferimento per la mia attività."</p>
+      <div class="who">Cliente storico</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Serietà e professionalità in ogni fase della consulenza."</p>
+      <div class="who">Cliente aziendale</div>
+    </div>
+  </div>
+</section>
+
+<section class="visit section" id="visit">
+  <div class="visit-copy">
+    <h2>Prenota un primo incontro</h2>
+    <p>Su appuntamento, per una prima consulenza chiara e senza impegno sulla vostra situazione fiscale o societaria.</p>
+    <div class="hours-table">
+      <div class="hours-row"><span>Lun, Mer, Gio</span><span>8:30 – 13:00, 15:30 – 19:00</span></div>
+      <div class="hours-row"><span>Mar, Ven</span><span>8:30 – 13:00</span></div>
+    </div>
+  </div>
+  <div class="visit-card">
+    <span class="eyebrow">Studio Cantarella</span>
+    <div class="addr">Via Giovanni Lavaggi, 48<br>95123 Catania</div>
+    <a href="tel:+39095444575" class="btn btn-primary" style="width:100%; text-align:center;">Chiama lo Studio</a>
+  </div>
+</section>
+
+<footer>
+  <span>© Studio Cantarella</span>
+  <span>Homepage concept prepared by Carmelo · design draft, not yet live</span>
+</footer>
+
+<script>
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('nav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+</script>
+
+</body>
+</html>
